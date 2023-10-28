@@ -14,8 +14,7 @@ using PtrCircle = std::shared_ptr<Circle>;
 constexpr double eps = 1e-6;
 constexpr size_t n = 10;   
 const double PI = std::acos(-1);    
-char typeC{}, typeE{}, typeH{};
-
+bool typeC{}, typeE{}, typeH{};
 static std::random_device rd;
 
 class ShapeGenerator  
@@ -81,14 +80,14 @@ public:
         switch (usd(rd))
         {
         case circleType:
-            typeC = 'y';
+            typeC = true;
             return circle();
 
         case ellipseType:
-            typeE = 'y';
+            typeE = true;
             return ellipse();
         case helixType:
-            typeH = 'y';
+            typeH = true;
             return helix();
         default:
             return circle(); 
@@ -108,11 +107,13 @@ int main()
         {
             shapeVec.emplace_back(shapeGen.random_shape());   
         }
-    } while (typeC != 'y' && typeE != 'y' && typeH != 'y');
+    } while (!typeC  && !typeE  && !typeH);
     
 
     std::vector<PtrCircle> circleVec;    
-    double radiusSum{};    
+    double radiusSum{};   
+
+
 
     for (auto& ptrType : shapeVec)
     {
